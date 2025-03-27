@@ -1,0 +1,62 @@
+1. Raising Errors
+
+A function to validate the registration of a competitor for a competition. If the competitor’s weight is invalid (e.g., below the minimum allowed for the category), it raises an error.
+
+CREATE OR REPLACE FUNCTION validate_competitor_weight(p_start_id INT) RETURNS VOID AS $$
+DECLARE
+    competitor_weight REAL;
+BEGIN
+    SELECT competitor_weight INTO competitor_weight
+    FROM starts
+    WHERE id_start = p_start_id;
+
+    IF competitor_weight < 50 THEN -- Example threshold
+        RAISE EXCEPTION 'Competitor weight % is below the allowed minimum.', competitor_weight;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+2. Using a Loop
+
+A function to calculate the total prize pool for all competitions of a given federation.
+
+CREATE OR REPLACE FUNCTION calculate_total_prize(federation_id INT) RETURNS REAL AS $$
+DECLARE
+    total_prize REAL := 0.0;
+    prize REAL;
+BEGIN
+    FOR prize IN
+        SELECT prize_pool FROM competitions WHERE federation_id = federation_id
+    LOOP
+        total_prize := total_prize + prize;
+    END LOOP;
+
+    RETURN total_prize;
+END;
+$$ LANGUAGE plpgsql;
+
+3. Using a Cursor
+
+A function to list all competitors of a specific competition along with their results.
+
+CREATE OR REPLACE FUNCTION get_competitors_results(p_competition_id INT) RETURNS TABLE(competitor_id INT, result_id INT) AS $$
+DECLARE
+    cur CURSOR FOR
+        SELECT cs.id_cmptr, st.id_res
+        FROM competition_competitors_starts cs
+        JOIN starts st ON cs.id_str = st.id_start
+        WHERE cs.id_cmpt = p_competition_id;
+    rec RECORD;
+BEGIN
+    OPEN cur;
+
+    LOOP
+        FETCH cur INTO rec;
+        EXIT WHEN NOT FOUND;
+
+        RETURN QUERY SELECT rec.id_cmptr, rec.id_res;
+    END LOOP;
+
+    CLOSE cur;
+END;
+$$ LANGUAGE plpgsql;

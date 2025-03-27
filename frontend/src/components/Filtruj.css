@@ -1,0 +1,44 @@
+.filtruj-container {
+    margin-top: 20px;
+  }
+  
+  .filtruj-heading {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 28px;
+  }
+  
+  .filtruj-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Add space between buttons */
+  }
+  
+  .filtruj-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .filtruj-button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  .filtruj-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filtruj-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }

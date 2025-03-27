@@ -1,0 +1,137 @@
+1. Trigger to Validate Data Before Insert
+
+A trigger to ensure that a competitor's weight is above a certain minimum when a new record is added to the starts table.
+Function for the Trigger
+
+CREATE OR REPLACE FUNCTION validate_weight_before_insert() RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.competitor_weight < 50 THEN -- Example minimum weight
+        RAISE EXCEPTION 'Competitor weight % is below the allowed minimum.', NEW.competitor_weight;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+Trigger
+
+CREATE TRIGGER before_insert_starts
+BEFORE INSERT ON starts
+FOR EACH ROW
+EXECUTE FUNCTION validate_weight_before_insert();
+
+2. Trigger to Automatically Update Results
+
+A trigger to automatically update a competitor's results entry whenever their squat, bench press, or deadlift is modified.
+Function for the Trigger
+
+CREATE OR REPLACE FUNCTION update_results_after_change() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE results
+    SET id_sqt = NEW.id_squat,
+        id_bp = NEW.id_bench_press,
+        id_dl = NEW.id_deadlift
+    WHERE id_result = OLD.id_result;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+Trigger
+
+CREATE TRIGGER after_update_results
+AFTER UPDATE ON squats
+FOR EACH ROW
+EXECUTE FUNCTION update_results_after_change();
+
+3. Trigger to Log Deletion of Competitions
+
+A trigger to log when a competition is deleted, storing details in an audit_log table.
+Audit Log Table
+
+CREATE TABLE audit_log (
+    log_id SERIAL PRIMARY KEY,
+    operation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    operation TEXT,
+    details TEXT
+);
+
+Function for the Trigger
+
+CREATE OR REPLACE FUNCTION log_competition_deletion() RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO audit_log (operation, details)
+    VALUES ('DELETE', 'Deleted competition with ID ' || OLD.id_competition);
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+Trigger
+
+CREATE TRIGGER after_delete_competition
+AFTER DELETE ON competitions
+FOR EACH ROW
+EXECUTE FUNCTION log_competition_deletion();
+
+4. Trigger to Enforce Unique Federation Names
+
+A trigger to enforce that no two federations have the same name, regardless of case.
+Function for the Trigger
+
+CREATE OR REPLACE FUNCTION enforce_unique_federation_name() RETURNS TRIGGER AS $$
+DECLARE
+    existing_fed INT;
+BEGIN
+    SELECT COUNT(*) INTO existing_fed
+    FROM federations
+    WHERE LOWER(fed_name) = LOWER(NEW.fed_name);
+
+    IF existing_fed > 0 THEN
+        RAISE EXCEPTION 'Federation name "%" already exists.', NEW.fed_name;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+Trigger
+
+CREATE TRIGGER before_insert_federations
+BEFORE INSERT ON federations
+FOR EACH ROW
+EXECUTE FUNCTION enforce_unique_federation_name();
+
+5. Trigger to Auto-Calculate Competition Duration
+
+A trigger to calculate and store the duration of a competition in days whenever it is inserted or updated.
+Function for the Trigger
+
+CREATE OR REPLACE FUNCTION calculate_competition_duration() RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.end_date < NEW.begin_date THEN
+        RAISE EXCEPTION 'End date cannot be earlier than begin date.';
+    END IF;
+
+    NEW.prize_pool := NEW.end_date - NEW.begin_date;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+Trigger
+
+CREATE TRIGGER before_insert_update_competitions
+BEFORE INSERT OR UPDATE ON competitions
+FOR EACH ROW
+EXECUTE FUNCTION calculate_competition_duration();
+
+Usage Summary
+
+    Trigger 1 ensures data validity before insert (e.g., minimum weight for starts).
+    Trigger 2 updates related data automatically (e.g., updating results after performance updates).
+    Trigger 3 logs operations for traceability (e.g., competition deletions).
+    Trigger 4 enforces unique constraints with custom logic.
+    Trigger 5 automates derived data calculation (e.g., competition duration).
+
+These examples demonstrate various use cases for triggers, integrating them seamlessly with your database schema. Let me know if you’d like additional examples!

@@ -1,0 +1,12 @@
+alter table admin_request  add foreign key (id_adm) references admins (id_admin) ;
+alter table admin_request  add foreign key (id_req) references requests (id_request) ;
+alter table competition_federation  add foreign key (id_fed) references federations (id_federation) ;
+alter table competition_federation  add foreign key (id_comp) references competitions (id_competition) ;
+alter table competition_competitors_starts  add foreign key (id_str) references starts (id_start) ;
+alter table competition_competitors_starts  add foreign key (id_cmpt) references competitions (id_competition) ;
+alter table competition_competitors_starts  add foreign key (id_cmptr) references competitors (id_competitor) ;
+alter table starts  add foreign key (id_res) references results (id_result) ;
+alter table results  add foreign key (id_sqt) references squats (id_squat) ;
+alter table results  add foreign key (id_bp) references bench_press (id_bench_press) ;
+alter table results  add foreign key (id_dl) references deadlifts (id_deadlift) ;
+alter table admins add foreign key (id_fed_adm) references federations (id_federation) ;

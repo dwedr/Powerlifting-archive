@@ -1,0 +1,229 @@
+.content-display {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  min-height: 150px;
+}
+
+button {
+  min-width: 100px;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Adjust Button Styles */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: -10px; /* Move buttons closer to the top */
+}
+
+.ranking-button {
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ranking-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Table Styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+
+/* General container styling for Wyszukaj */
+.wyszukaj-container {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Light gray background for consistency */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Section title */
+.wyszukaj-container h2 {
+  text-align: center;
+  color: #343a40; /* Dark text */
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Toggle buttons */
+.button-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.button-row .filter-button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-row .filter-button:hover {
+  background-color: #218838; /* Slightly darker green on hover */
+}
+
+.button-row .filter-button.active {
+  background-color: #1e7e34; /* Even darker green for active button */
+}
+
+/* Search section styling */
+.search-section {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.search-section h3 {
+  color: #495057; /* Slightly darker text */
+  margin-bottom: 15px;
+}
+
+.search-section input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.search-section .btn {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  background-color: #28a745; /* Green button */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-section .btn:hover {
+  background-color: #218838; /* Slightly darker green on hover */
+}
+
+/* Results table */
+.results {
+  margin-top: 20px;
+}
+
+.results h3 {
+  color: #495057;
+  margin-bottom: 15px;
+}
+
+.results .table {
+  width: 100%;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #dee2e6;
+}
+
+.results .table th {
+  background-color: #343a40;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.results .table td {
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
+}
+
+
+/* Ensure the container and table are responsive */
+.results {
+  margin-top: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling for tables */
+}
+
+.results .table {
+  width: 100%;
+  min-width: 800px; /* Set a minimum width for wide tables */
+  border: 1px solid #dee2e6;
+}
+
+.results .table th,
+.results .table td {
+  padding: 10px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.results .table th {
+  background-color: #343a40;
+  color: white;
+}
+
+.results .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa;
+}
+
+/* Add padding and ensure tables fit within the container */
+.search-section {
+  padding: 15px;
+  background-color: #f8f9fa; /* Match the light background for consistency */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table container for scrolling */
+.table-responsive {
+  overflow-x: auto;
+}

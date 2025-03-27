@@ -1,0 +1,8 @@
+funkcja opakowujaca do wywalania odpowiedniego erroru
+
+jeszcze tabela logow dla admina (opcjonalne)
+
+
+oprocz samych wynikow czyli imie nazwikso waga kategoria debiutant id siad itp 
+
+nazwa zawodow id_fed data rozpoczecia date czy zawody sie juz odbyly 
